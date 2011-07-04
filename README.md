@@ -2,9 +2,9 @@
 
 ## Usage
 
-    $ optimizer.py <-i include [-i ...]> [-x <exclude> [-x ...]] <ip:port> <database>...
+    $ optimizer.py <-i include [-i...]> [-x <exclude> [-x...]] [-u user -p pass] <ip:port> <database>...
 
-where **-i** and **-x** list the tables with are to be optimized and ignored, respectively.
+where the **-i** and **-x** options list the tables which are to be optimized and ignored, respectively. There may be more than one of these options.
 
 Those options accept wildcards, so any of the following syntax is correct:
 
@@ -17,13 +17,15 @@ Those options accept wildcards, so any of the following syntax is correct:
 * engine:archive
 * data\_free:5000 (tables with more than 5KB of free space)
 
-Optimizes are local to the database server, by using with the `OPTIMIZE LOCAL TABLE` statement.
+optimizer.py does not write the optimize statements in the binary log, since it runs the `OPTIMIZE LOCAL TABLE` command.
+
+By default 2 parallel optimize commands are executed simultaneously. You can tweak this parameter with the **-n** flag.
 
 ## Example
 
-    $ optimizer.py -i engine:innodb -x bigTable 10.1.1.1:3306 db1 db2
+    $ optimizer.py -i engine:innodb -x bigTable -x archive% 10.1.1.1:3306 db1 db2
 
-> Optimize all InnoDB tables, excluding *bigtable*, on databases *db1* and *db2*.
+> Optimize all InnoDB tables, excluding *bigtable* and those starting with *archive*, on databases *db1* and *db2*.
 
     $ optimizer.py -n 4 -i % 10.1.1.1:3306 db1
 
