@@ -36,8 +36,11 @@ class OptimizerThread(threading.Thread):
             print 'Optimizing %s:%s (thread %s)...' % (db, table, self.getName())
             sys.stdout.flush()
 
-            c.execute('OPTIMIZE LOCAL TABLE %s.%s' % (db, table))
-            c.fetchall()
+            try:
+                c.execute('OPTIMIZE LOCAL TABLE %s.%s' % (db, table))
+                c.fetchall()
+            except MySQLdb.OperationalError, e:
+                print('Error optimizing %s.%s: %s (thread %s)' % (db, table, str(e), self.getName()))
 
 def process_expression(expr_list, tables_status):
     if expr_list is None:
