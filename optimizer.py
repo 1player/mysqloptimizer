@@ -172,7 +172,7 @@ def main():
 
         # create the worker threads
         for i in xrange(options.thread_count):
-            thread_connection = connect_to_instance(instance_id)
+            thread_connection = connect_to_instance(instance_id, options.user, options.password)
             thread = OptimizerThread(thread_connection, i + 1)
             thread.start()
 
