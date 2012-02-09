@@ -37,6 +37,5 @@ On an idle database server with fast disks, run *n-1* parallel optimizes, where 
 
 ## Other
 
-* [Bugs and issues](https://bitbucket.org/eazy/mysqloptimizer/issues?status=new&status=open)
-* [Download latest version](https://bitbucket.org/eazy/mysqloptimizer/get/tip.tar.gz)
+* [Download latest version](https://github.com/1player/mysqloptimizer/zipball/master)
 
